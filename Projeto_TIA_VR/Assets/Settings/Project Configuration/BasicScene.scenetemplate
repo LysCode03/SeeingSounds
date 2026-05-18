@@ -12,6 +12,7 @@ Texture2D:
     Hash: 00000000000000000000000000000000
   m_IsAlphaChannelOptional: 0
   serializedVersion: 3
+  serializedVersion: 3
   m_Width: 888
   m_Height: 540
   m_CompleteImageSize: 239760
@@ -59,7 +60,7 @@ MonoBehaviour:
   m_Name: BasicScene
   m_EditorClassIdentifier: 
   templateScene: {fileID: 102900000, guid: 4e9fef26e6adb88479ad1b9834a32d94, type: 3}
-  templateName: VR (Basic)
+  templateName: Basic (VR)
   description: A basic scene configured with basic VR support for interactions and
     locomotion.
   preview: {fileID: -7201468737772367373}
