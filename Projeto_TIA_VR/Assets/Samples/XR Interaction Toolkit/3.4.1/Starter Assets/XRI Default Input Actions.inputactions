@@ -978,7 +978,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Ecolocation",
+                    "name": "Echolocation",
                     "type": "Button",
                     "id": "534c2380-4988-46a2-b7cb-e667f3995378",
                     "expectedControlType": "",
@@ -1303,7 +1303,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Ecolocation",
+                    "action": "Echolocation",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -2464,7 +2464,7 @@
                     "name": "Jump",
                     "type": "Button",
                     "id": "01c7fda4-9c15-4167-8b87-58024f21d903",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
