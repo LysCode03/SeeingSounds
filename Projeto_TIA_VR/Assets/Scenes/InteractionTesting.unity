@@ -678,7 +678,7 @@ GameObject:
   - component: {fileID: 1078527096}
   - component: {fileID: 1078527097}
   m_Layer: 0
-  m_Name: Ecolocation
+  m_Name: Echolocation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -713,7 +713,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   echolocationLight: {fileID: 1078527095}
-  openMenuAction: {fileID: 0}
+  openMenuAction: {fileID: 8176862327817623493, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!1 &1249617917
 GameObject:
   m_ObjectHideFlags: 0
