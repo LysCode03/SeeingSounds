@@ -4,7 +4,7 @@ using System.Collections;
 
 public class Echolocation : MonoBehaviour
 {
-    public GameObject echolocationLight;
+    public GameObject[] echolocationLights;
     public InputActionReference openMenuAction;
     public float lightDuration = 2f; // to simualte echolocation
 
@@ -24,15 +24,25 @@ public class Echolocation : MonoBehaviour
 
     private void  ActivateEcholocation(InputAction.CallbackContext context)
     {
-        if (!echolocationLight.activeSelf)
+        if (!IsAnyLightActive())
             StartCoroutine(EcholocationPulse());
+    }
+
+    private bool IsAnyLightActive()
+    {
+        foreach (GameObject light in echolocationLights)
+            if (light.activeSelf) return true;
+        return false;
     }
 
     private IEnumerator EcholocationPulse()
     {
-        echolocationLight.SetActive(true);
-        yield return new WaitForSeconds(lightDuration);
-        echolocationLight.SetActive(false);
+        foreach (GameObject light in echolocationLights)
+        {
+            light.SetActive(true);
+            yield return new WaitForSeconds(lightDuration);
+            light.SetActive(false);
+        }
     }
 
     private void OnDeviceChange(InputDevice device, InputDeviceChange change)
