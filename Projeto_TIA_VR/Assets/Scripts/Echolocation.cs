@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class Echolocation : MonoBehaviour
 {
     public GameObject echolocationLight;
     public InputActionReference openMenuAction;
+    public float lightDuration = 2f; // to simualte echolocation
 
     public void Awake()
     {
@@ -22,7 +24,15 @@ public class Echolocation : MonoBehaviour
 
     private void  ActivateEcholocation(InputAction.CallbackContext context)
     {
-        echolocationLight.SetActive(!echolocationLight.activeSelf);
+        if (!echolocationLight.activeSelf)
+            StartCoroutine(EcholocationPulse());
+    }
+
+    private IEnumerator EcholocationPulse()
+    {
+        echolocationLight.SetActive(true);
+        yield return new WaitForSeconds(lightDuration);
+        echolocationLight.SetActive(false);
     }
 
     private void OnDeviceChange(InputDevice device, InputDeviceChange change)
