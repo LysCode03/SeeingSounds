@@ -71,6 +71,7 @@ Shader "Custom/EchoReveal"
                 float2 uv          : TEXCOORD0;
                 float3 positionWS  : TEXCOORD1;
                 UNITY_VERTEX_INPUT_INSTANCE_ID
+                UNITY_VERTEX_OUTPUT_STEREO   // required for VR single-pass instanced rendering
             };
 
             Varyings vert (Attributes IN)
@@ -78,6 +79,7 @@ Shader "Custom/EchoReveal"
                 Varyings OUT;
                 UNITY_SETUP_INSTANCE_ID(IN);
                 UNITY_TRANSFER_INSTANCE_ID(IN, OUT);
+                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT); // VR: pick the correct eye
 
                 VertexPositionInputs pos = GetVertexPositionInputs(IN.positionOS.xyz);
                 OUT.positionHCS = pos.positionCS;
@@ -150,6 +152,7 @@ Shader "Custom/EchoReveal"
             half4 frag (Varyings IN) : SV_Target
             {
                 UNITY_SETUP_INSTANCE_ID(IN);
+                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(IN); // VR: resolve eye index per fragment
 
                 half4 albedo = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, IN.uv) * _BaseColor;
 

@@ -1,12 +1,17 @@
 using UnityEngine;
+#if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem;
+#endif
 
 /// <summary>
-/// Makes a sound source reveal its surroundings.
+/// Makes a sound source reveal its surroundings. Every source is configured
+/// independently: give the player short-range, high-frequency waves (footsteps)
+/// and a beacon long-range, low-frequency waves just by changing these fields.
 ///
-/// OneShot  - emits a single expanding wave each time <see cref="Emit"/> is called
-///            (great for footsteps, knocks, dropped objects). Can auto-repeat for testing.
+/// OneShot  - emits an expanding wave per <see cref="Emit"/> call. Can auto-repeat
+///            at a set frequency, and/or fire on a key press.
 /// Constant - keeps the area around it permanently lit while enabled
-///            (great for a radio, dripping pipe, humming machine).
+///            (radio, dripping pipe, humming machine).
 ///
 /// Optionally drives an AudioSource so the sound you hear matches the reveal you see.
 /// </summary>
@@ -18,11 +23,11 @@ public class EchoSoundEmitter : MonoBehaviour
     [Header("Mode")]
     public Mode mode = Mode.OneShot;
 
-    [Header("Wave shape")]
+    [Header("Wave shape (per source)")]
     [Tooltip("How fast the wavefront expands, in metres/second. (OneShot only.)")]
     public float speed = 8f;
 
-    [Tooltip("How far the sound reaches, in metres.")]
+    [Tooltip("How far the sound reaches, in metres. Small = a tight wave hugging the source.")]
     public float maxRadius = 8f;
 
     [Tooltip("Seconds a revealed surface takes to fade back to dark. (OneShot only.)")]
@@ -31,21 +36,31 @@ public class EchoSoundEmitter : MonoBehaviour
     [Tooltip("Brightness multiplier for this sound.")]
     [Range(0f, 4f)] public float intensity = 1f;
 
-    [Header("One-shot triggering")]
+    [Header("Auto-repeat")]
     [Tooltip("Emit one wave as soon as the scene starts.")]
     public bool emitOnStart = false;
 
-    [Tooltip("Keep re-emitting on an interval. Handy for simulating footsteps while testing.")]
+    [Tooltip("Automatically re-emit on a steady timer.")]
     public bool autoRepeat = false;
 
-    [Tooltip("Seconds between auto-repeat emissions.")]
-    public float repeatInterval = 0.6f;
+    [Tooltip("Frequency of the wave: how many waves per second when auto-repeating. " +
+             "High = frequent (footsteps); low = occasional (a distant beacon).")]
+    public float frequency = 1f;
 
-    [Tooltip("Only emit while this object is actually moving (real footsteps). Tracks world-space speed.")]
+    [Tooltip("If ON, auto-repeat only fires when the source is moving (checked at each timer tick, " +
+             "so small jitters never cause extra waves). If OFF, the timer always fires.")]
     public bool onlyWhenMoving = false;
 
     [Tooltip("Minimum horizontal speed (m/s) that counts as 'moving'.")]
     public float moveThreshold = 0.15f;
+
+    [Header("Manual trigger")]
+    [Tooltip("Allow emitting a wave on a key press (e.g. a deliberate, large 'ping').")]
+    public bool triggerOnKey = false;
+#if ENABLE_INPUT_SYSTEM
+    [Tooltip("Key that fires a manual wave.")]
+    public Key triggerKey = Key.E;
+#endif
 
     [Header("Audio (optional)")]
     [Tooltip("If set, the matching sound plays when a wave is emitted.")]
@@ -57,6 +72,7 @@ public class EchoSoundEmitter : MonoBehaviour
     private float _timer;
     private Vector3 _lastPos;
     private bool _hasLastPos;
+    private float _currentSpeed;
 
     private void Reset()
     {
@@ -96,31 +112,37 @@ public class EchoSoundEmitter : MonoBehaviour
 
     private void Update()
     {
+        TrackSpeed();
+
+#if ENABLE_INPUT_SYSTEM
+        if (triggerOnKey && Keyboard.current != null && Keyboard.current[triggerKey].wasPressedThisFrame)
+            Emit();
+#endif
+
         if (mode != Mode.OneShot || !autoRepeat) return;
 
-        if (onlyWhenMoving && !IsMoving())
-        {
-            _timer = repeatInterval; // primed so a step fires the moment movement resumes
-            return;
-        }
-
+        // Steady free-running timer: cadence is unaffected by starting/stopping, so small
+        // movements can't pile up extra waves. Movement (if required) is only checked at the tick.
         _timer += Time.deltaTime;
-        if (_timer >= repeatInterval)
+        float interval = 1f / Mathf.Max(frequency, 0.0001f);
+        if (_timer >= interval)
         {
-            _timer = 0f;
-            Emit();
+            _timer -= interval;
+            if (!onlyWhenMoving || _currentSpeed >= moveThreshold)
+                Emit();
         }
     }
 
-    /// <summary>True if this object's horizontal speed exceeds the move threshold this frame.</summary>
-    private bool IsMoving()
+    /// <summary>Per-frame horizontal speed, used by the optional movement gate.</summary>
+    private void TrackSpeed()
     {
         Vector3 pos = transform.position;
         if (!_hasLastPos)
         {
             _lastPos = pos;
             _hasLastPos = true;
-            return false;
+            _currentSpeed = 0f;
+            return;
         }
 
         Vector3 delta = pos - _lastPos;
@@ -128,7 +150,7 @@ public class EchoSoundEmitter : MonoBehaviour
         delta.y = 0f; // ignore vertical (head bob / crouch)
 
         float dt = Mathf.Max(Time.deltaTime, 1e-5f);
-        return (delta.magnitude / dt) >= moveThreshold;
+        _currentSpeed = delta.magnitude / dt;
     }
 
     /// <summary>Emit a single expanding reveal wave from this object's position.</summary>
