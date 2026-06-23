@@ -2,14 +2,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Central hub for the echolocation reveal. Collects all active sound "pulses"
-/// (one-shot expanding waves + constant emitters) and pushes them to the
-/// <c>Custom/EchoReveal</c> shader as global properties every frame.
+/// Central hub for the echolocation reveal. Collects all active waves (one-shot +
+/// constant emitters) and pushes them to the <c>Custom/EchoReveal</c> shader as
+/// global properties every frame. Each wave carries its OWN look (colour, edge,
+/// interior, falloff, fade direction) so sources are fully independent.
 ///
-/// Put ONE of these in the scene. Any GameObject using a material with the
-/// EchoReveal shader will then react to sounds automatically.
+/// Put ONE of these in the scene.
 /// </summary>
-[DefaultExecutionOrder(1000)] // run after emitters' Update so freshly-emitted pulses are included this frame
+[DefaultExecutionOrder(1000)] // run after emitters' Update so freshly-emitted waves are included this frame
 [AddComponentMenu("Echolocation/Echo Reveal Manager")]
 public class EchoRevealManager : MonoBehaviour
 {
@@ -18,81 +18,55 @@ public class EchoRevealManager : MonoBehaviour
 
     public static EchoRevealManager Instance { get; private set; }
 
-    [Header("Look & feel (tweak at runtime)")]
+    [Header("Scene (global)")]
     [Tooltip("Brightness applied to surfaces with no sound nearby. 0 = pitch black.")]
     [Range(0f, 1f)] public float ambient = 0.02f;
 
-    [Tooltip("Colour of the wave's bright leading edge.")]
-    public Color edgeColor = new Color(0.6f, 0.85f, 1f, 1f); // light blue
-
-    [Tooltip("Colour of the revealed interior. White shows the surfaces' true colours.")]
-    public Color interiorColor = Color.white;
-
-    [Tooltip("Seconds the bright leading edge of a wave stays visible as it sweeps past a surface.")]
-    [Range(0.01f, 1f)] public float ringTime = 0.12f;
-
-    [Tooltip("Master brightness multiplier for the whole reveal. Lower = dimmer overall.")]
+    [Tooltip("Master multiplier over every wave's reveal.")]
     [Range(0f, 2f)] public float brightness = 0.8f;
 
-    [Tooltip("Brightness of the wave's leading-edge outline.")]
-    [Range(0f, 2f)] public float edgeStrength = 1f;
-
-    [Tooltip("Sharpness of the leading-edge outline. Higher = thinner, crisper line.")]
-    [Range(1f, 8f)] public float edgeSharpness = 2f;
-
-    [Tooltip("Brightness of the dim glow lingering inside the wave.")]
-    [Range(0f, 1f)] public float interiorStrength = 0.45f;
-
-    [Header("Range")]
-    [Tooltip("Multiplier applied to every wave's radius. Below 1 shrinks the reach of all sounds at once.")]
-    [Range(0.05f, 2f)] public float rangeScale = 1f;
-
-    [Tooltip("Distance falloff exponent for the leading edge. Higher pulls the bright ring in toward the origin, reducing visible range.")]
-    [Range(1f, 8f)] public float falloff = 2f;
-
-    [Tooltip("ON: the interior fades from the centre outwards, following the wave. OFF: legacy centre-peaked look (fades edge-first).")]
-    public bool fadeInsideOut = true;
-
-    [Tooltip("Inside-out mode only: metres over which the interior fades out near its max range. Smaller = harder outer edge.")]
+    [Tooltip("Metres over which interiors fade out near their max range (inside-out mode).")]
     [Range(0.1f, 10f)] public float rangeSoftness = 2f;
 
-    [Header("Timing & motion (global multipliers)")]
-    [Tooltip("Multiplies every wave's expansion speed. Below 1 = slower-moving wavefront.")]
+    [Header("Global multipliers (scale every source)")]
+    [Range(0.05f, 2f)] public float rangeScale = 1f;
     [Range(0.1f, 3f)] public float speedScale = 1f;
-
-    [Tooltip("Multiplies how long revealed surfaces take to fade back to dark.")]
     [Range(0.1f, 3f)] public float fadeScale = 1f;
+
+    /// <summary>A single source's full wave description: geometry + look.</summary>
+    public struct WaveSettings
+    {
+        public float speed, maxRadius, fade, intensity;
+        public Color edgeColor, interiorColor;
+        public float edgeStrength, edgeSharpness, interiorStrength, ringTime, falloff;
+        public bool fadeInsideOut;
+    }
 
     private struct Pulse
     {
         public Vector3 origin;
         public float startTime;
-        public float speed;
-        public float maxRadius;
-        public float fade;
-        public float intensity;
+        public WaveSettings s;
     }
 
     private readonly List<Pulse> _oneShots = new List<Pulse>();
     private readonly List<EchoSoundEmitter> _constants = new List<EchoSoundEmitter>();
 
-    private readonly Vector4[] _a = new Vector4[MaxPulses];
-    private readonly Vector4[] _b = new Vector4[MaxPulses];
+    private readonly Vector4[] _a = new Vector4[MaxPulses]; // origin.xyz, startTime
+    private readonly Vector4[] _b = new Vector4[MaxPulses]; // speed(<=0=constant), maxRadius, fade, intensity
+    private readonly Vector4[] _c = new Vector4[MaxPulses]; // edgeColor.rgb, edgeStrength
+    private readonly Vector4[] _d = new Vector4[MaxPulses]; // interiorColor.rgb, interiorStrength
+    private readonly Vector4[] _e = new Vector4[MaxPulses]; // ringTime, falloff, edgeSharpness, fadeInsideOut
 
-    private static readonly int IdA       = Shader.PropertyToID("_EchoPulseA");
-    private static readonly int IdB       = Shader.PropertyToID("_EchoPulseB");
-    private static readonly int IdCount   = Shader.PropertyToID("_EchoPulseCount");
-    private static readonly int IdTime    = Shader.PropertyToID("_EchoTime");
-    private static readonly int IdAmbient = Shader.PropertyToID("_EchoAmbient");
-    private static readonly int IdRing     = Shader.PropertyToID("_EchoRingTime");
-    private static readonly int IdEdgeCol  = Shader.PropertyToID("_EchoEdgeColor");
-    private static readonly int IdInterCol = Shader.PropertyToID("_EchoInteriorColor");
-    private static readonly int IdBright   = Shader.PropertyToID("_EchoBrightness");
-    private static readonly int IdEdge     = Shader.PropertyToID("_EchoEdgeStrength");
-    private static readonly int IdEdgeSharp = Shader.PropertyToID("_EchoEdgeSharpness");
-    private static readonly int IdInterior = Shader.PropertyToID("_EchoInteriorStrength");
-    private static readonly int IdFalloff  = Shader.PropertyToID("_EchoFalloff");
-    private static readonly int IdFadeIO   = Shader.PropertyToID("_EchoFadeInsideOut");
+    private static readonly int IdA         = Shader.PropertyToID("_EchoPulseA");
+    private static readonly int IdB         = Shader.PropertyToID("_EchoPulseB");
+    private static readonly int IdC         = Shader.PropertyToID("_EchoPulseC");
+    private static readonly int IdD         = Shader.PropertyToID("_EchoPulseD");
+    private static readonly int IdE         = Shader.PropertyToID("_EchoPulseE");
+    private static readonly int IdCount     = Shader.PropertyToID("_EchoPulseCount");
+    private static readonly int IdTime      = Shader.PropertyToID("_EchoTime");
+    private static readonly int IdAmbient   = Shader.PropertyToID("_EchoAmbient");
+    private static readonly int IdBright    = Shader.PropertyToID("_EchoBrightness");
     private static readonly int IdRangeSoft = Shader.PropertyToID("_EchoRangeSoftness");
 
     private void OnEnable()
@@ -107,24 +81,19 @@ public class EchoRevealManager : MonoBehaviour
         if (Instance == this) Instance = null;
     }
 
-    /// <summary>Emit a single expanding reveal wave from a world position.</summary>
-    public void EmitPulse(Vector3 origin, float speed, float maxRadius, float fade, float intensity)
+    /// <summary>Emit a single expanding reveal wave from a world position with the given look.</summary>
+    public void EmitPulse(Vector3 origin, WaveSettings s)
     {
         if (_oneShots.Count >= MaxPulses)
             _oneShots.RemoveAt(0); // budget full: drop the oldest wave
 
-        _oneShots.Add(new Pulse
-        {
-            origin    = origin,
-            startTime = Time.time,
-            speed     = Mathf.Max(0.01f, speed),
-            maxRadius = Mathf.Max(0.01f, maxRadius),
-            fade      = Mathf.Max(0.001f, fade),
-            intensity = intensity
-        });
+        s.speed = Mathf.Max(0.01f, s.speed);
+        s.maxRadius = Mathf.Max(0.01f, s.maxRadius);
+        s.fade = Mathf.Max(0.001f, s.fade);
+
+        _oneShots.Add(new Pulse { origin = origin, startTime = Time.time, s = s });
     }
 
-    /// <summary>Register a constant (always-on) sound emitter.</summary>
     public void RegisterConstant(EchoSoundEmitter emitter)
     {
         if (emitter != null && !_constants.Contains(emitter))
@@ -140,27 +109,23 @@ public class EchoRevealManager : MonoBehaviour
     {
         float now = Time.time;
 
-        // Drop one-shot waves that have fully expanded and faded out.
-        // Lifetime must use the SCALED values, or slowing a wave down could cull it early.
+        // Drop one-shot waves that have fully expanded and faded out (using the scaled timing).
         for (int i = _oneShots.Count - 1; i >= 0; i--)
         {
             Pulse p = _oneShots[i];
-            float lifetime = (p.maxRadius * rangeScale) / (p.speed * speedScale) + p.fade * fadeScale;
+            float lifetime = (p.s.maxRadius * rangeScale) / (p.s.speed * speedScale) + p.s.fade * fadeScale;
             if (now - p.startTime > lifetime)
                 _oneShots.RemoveAt(i);
         }
 
         int count = 0;
 
-        // Constant sounds get priority on the budget.
+        // Constant sources first (priority on the budget).
         for (int i = 0; i < _constants.Count && count < MaxPulses; i++)
         {
             EchoSoundEmitter e = _constants[i];
             if (e == null || !e.isActiveAndEnabled) continue;
-
-            Vector3 pos = e.transform.position;
-            _a[count] = new Vector4(pos.x, pos.y, pos.z, now);
-            _b[count] = new Vector4(0f, e.maxRadius * rangeScale, 1f, e.intensity); // speed 0 => constant
+            Pack(count, e.transform.position, now, e.GetWaveSettings(), true);
             count++;
         }
 
@@ -168,25 +133,29 @@ public class EchoRevealManager : MonoBehaviour
         for (int i = 0; i < _oneShots.Count && count < MaxPulses; i++)
         {
             Pulse p = _oneShots[i];
-            _a[count] = new Vector4(p.origin.x, p.origin.y, p.origin.z, p.startTime);
-            _b[count] = new Vector4(p.speed * speedScale, p.maxRadius * rangeScale, p.fade * fadeScale, p.intensity);
+            Pack(count, p.origin, p.startTime, p.s, false);
             count++;
         }
 
         Shader.SetGlobalVectorArray(IdA, _a);
         Shader.SetGlobalVectorArray(IdB, _b);
+        Shader.SetGlobalVectorArray(IdC, _c);
+        Shader.SetGlobalVectorArray(IdD, _d);
+        Shader.SetGlobalVectorArray(IdE, _e);
         Shader.SetGlobalInt(IdCount, count);
         Shader.SetGlobalFloat(IdTime, now);
         Shader.SetGlobalFloat(IdAmbient, ambient);
-        Shader.SetGlobalFloat(IdRing, ringTime);
-        Shader.SetGlobalColor(IdEdgeCol, edgeColor);
-        Shader.SetGlobalColor(IdInterCol, interiorColor);
         Shader.SetGlobalFloat(IdBright, brightness);
-        Shader.SetGlobalFloat(IdEdge, edgeStrength);
-        Shader.SetGlobalFloat(IdEdgeSharp, edgeSharpness);
-        Shader.SetGlobalFloat(IdInterior, interiorStrength);
-        Shader.SetGlobalFloat(IdFalloff, falloff);
-        Shader.SetGlobalFloat(IdFadeIO, fadeInsideOut ? 1f : 0f);
         Shader.SetGlobalFloat(IdRangeSoft, rangeSoftness);
+    }
+
+    private void Pack(int k, Vector3 origin, float startTime, WaveSettings s, bool constant)
+    {
+        float speed = constant ? 0f : s.speed * speedScale; // 0 flags a constant source in the shader
+        _a[k] = new Vector4(origin.x, origin.y, origin.z, startTime);
+        _b[k] = new Vector4(speed, s.maxRadius * rangeScale, s.fade * fadeScale, s.intensity);
+        _c[k] = new Vector4(s.edgeColor.r, s.edgeColor.g, s.edgeColor.b, s.edgeStrength);
+        _d[k] = new Vector4(s.interiorColor.r, s.interiorColor.g, s.interiorColor.b, s.interiorStrength);
+        _e[k] = new Vector4(s.ringTime, s.falloff, s.edgeSharpness, s.fadeInsideOut ? 1f : 0f);
     }
 }

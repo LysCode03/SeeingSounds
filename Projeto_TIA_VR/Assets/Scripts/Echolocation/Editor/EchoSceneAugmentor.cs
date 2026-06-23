@@ -70,6 +70,7 @@ public static class EchoSceneAugmentor
         steps.maxRadius = 3f;         // small, hugging the player
         steps.fade = 2f;
         steps.intensity = 1f;
+        steps.moveBias = 1.5f;        // lead the wave forward so it doesn't trail behind you
 
         // Big wave on E: a deliberate, long-range ping.
         var big = GetOrAddEmitter(cam.transform, "BigWave (E)");
