@@ -5,7 +5,7 @@ public class ChallangesManager : MonoBehaviour
     public static ChallangesManager Instance; // making sure anyone can access it
 
     public int completedChallanges = 0;
-    public int totalChallanges = 5;
+    public int totalChallanges = 8;
 
     void Awake()
     {
