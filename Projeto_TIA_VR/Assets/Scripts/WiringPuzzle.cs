@@ -41,6 +41,7 @@ public class WiringPuzzle : MonoBehaviour
         echoEmitter.edgeColor = Color.white;
         echoEmitter.interiorColor = Color.white;
         echoEmitter.SetConstant();
+        Debug.Log("Wiring puzzle complete!");
         ChallangesManager.Instance.CompleteChallange();
     }
 }
