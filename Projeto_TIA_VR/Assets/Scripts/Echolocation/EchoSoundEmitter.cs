@@ -233,4 +233,18 @@ public class EchoSoundEmitter : MonoBehaviour
         if (mgr != null)
             mgr.EmitPulse(transform.position + _moveDir * moveBias, GetWaveSettings());
     }
+    
+    // Change Mode to constant
+    public void SetConstant()
+    {
+        mode = Mode.Constant;
+        if (EchoRevealManager.Instance != null)
+            EchoRevealManager.Instance.RegisterConstant(this);
+
+        if (audioSource != null && !audioSource.isPlaying)
+        {
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+    }
 }
