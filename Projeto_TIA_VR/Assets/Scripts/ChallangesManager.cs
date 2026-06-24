@@ -17,6 +17,8 @@ public class ChallangesManager : MonoBehaviour
         completedChallanges++;
         Debug.Log($"Challanges: {completedChallanges}/{totalChallanges}");
 
+        WristUI.Instance.UpdateCounter(completedChallanges);
+
         if (completedChallanges >= totalChallanges)
         {
             Debug.Log("All objectives complete!");
