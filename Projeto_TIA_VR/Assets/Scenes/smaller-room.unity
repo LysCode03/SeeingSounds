@@ -2197,6 +2197,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: cloe_room
       objectReference: {fileID: 0}
+    - target: {fileID: 1739688604143431293, guid: e87ad843f93d70746aa82fad7473b9bd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.97
+      objectReference: {fileID: 0}
     - target: {fileID: 2774220344278030320, guid: e87ad843f93d70746aa82fad7473b9bd, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.13
