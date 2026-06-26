@@ -5,6 +5,8 @@ public class BatteryPuzzle : MonoBehaviour
     public BatterySocket[] sockets;
     public EchoSoundEmitter echoEmitter;
 
+    private bool wasCompleted = false;
+
     void Start()
     {
         // Start silent
@@ -26,6 +28,13 @@ public class BatteryPuzzle : MonoBehaviour
 
         echoEmitter.edgeColor = Color.white;
         echoEmitter.interiorColor = Color.white;
-        ChallangesManager.Instance.CompleteChallange();
+        if (!wasCompleted)
+        {
+            foreach (var socket in sockets)
+                socket.LockObject();
+                
+            ChallangesManager.Instance.CompleteChallange();
+            wasCompleted = true;
+        }
     }
 }

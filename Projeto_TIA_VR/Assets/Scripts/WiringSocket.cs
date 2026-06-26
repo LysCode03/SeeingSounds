@@ -50,6 +50,18 @@ public class WiringSocket : MonoBehaviour
         parentPuzzle.RefreshVisual();
     }
 
+    public void LockObject()
+    {
+        var interactable = socket.firstInteractableSelected;
+
+        if (interactable != null)
+        {
+            var grab = (interactable as MonoBehaviour)
+                ?.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
+            if (grab != null) grab.enabled = false;
+        }
+    }
+
     public bool IsCorrectlyFilled() => isCorrectlyFilled;
     public bool HasWrongPiece() => hasWrongPiece;
 }

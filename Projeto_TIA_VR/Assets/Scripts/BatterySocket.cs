@@ -27,5 +27,18 @@ public class BatterySocket : MonoBehaviour
         parentPuzzle.CheckCompletion();
     }
 
+    public void LockObject()
+    {
+        var interactable = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.XRSocketInteractor>()
+            .firstInteractableSelected;
+        
+        if (interactable != null)
+        {
+            var grab = (interactable as MonoBehaviour)
+                ?.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
+            if (grab != null) grab.enabled = false;
+        }
+    }
+
     public bool IsFilled() => isFilled;
 }

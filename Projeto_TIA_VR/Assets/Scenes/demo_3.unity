@@ -2416,6 +2416,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -6689036041284674117, guid: d214326f97258434eafd692da7994527, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1315939556}
+    - targetCorrespondingSourceObject: {fileID: -6689036041284674117, guid: d214326f97258434eafd692da7994527, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1315939557}
   m_SourcePrefab: {fileID: -5645937942226959685, guid: d214326f97258434eafd692da7994527, type: 3}
 --- !u!4 &1315939555 stripped
 Transform:
@@ -2443,6 +2446,42 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 144.0773, y: 71.25835, z: 133.1365}
   m_Center: {x: -3.2702875, y: 174.20358, z: -5.909035}
+--- !u!114 &1315939557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 944181771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae1e6ffda0c04864d990fce2b0c4957f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mode: 0
+  speed: 8
+  maxRadius: 0.8
+  fade: 2.5
+  intensity: 1
+  edgeColor: {r: 1, g: 0.4880956, b: 0, a: 1}
+  interiorColor: {r: 1, g: 0.48627454, b: 0, a: 1}
+  edgeStrength: 1
+  edgeSharpness: 2
+  interiorStrength: 0.45
+  ringTime: 0.12
+  falloff: 2
+  fadeInsideOut: 1
+  emitOnStart: 0
+  autoRepeat: 1
+  frequency: 1
+  onlyWhenMoving: 0
+  moveThreshold: 0.15
+  moveBias: 0
+  triggerOnKey: 0
+  triggerKey: 19
+  triggerAction: {fileID: 0}
+  audioSource: {fileID: 0}
+  oneShotClip: {fileID: 0}
 --- !u!65 &1393029559
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2705,7 +2744,10 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 4e08b5ffa70b8aa4690d7bc66f0147b0, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2774220344278030320, guid: 84a0211609885f044adc5442e9a6227e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1641615376}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: -6689036041284674117, guid: 84a0211609885f044adc5442e9a6227e, type: 3}
       insertIndex: -1
@@ -2716,6 +2758,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -6689036041284674117, guid: 84a0211609885f044adc5442e9a6227e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1451852451}
+    - targetCorrespondingSourceObject: {fileID: -6689036041284674117, guid: 84a0211609885f044adc5442e9a6227e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1451852453}
+    - targetCorrespondingSourceObject: {fileID: -6689036041284674117, guid: 84a0211609885f044adc5442e9a6227e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1451852452}
   m_SourcePrefab: {fileID: -5645937942226959685, guid: 84a0211609885f044adc5442e9a6227e, type: 3}
 --- !u!4 &1451852447 stripped
 Transform:
@@ -2904,6 +2952,57 @@ MonoBehaviour:
   m_LimitAngularVelocity: 0
   m_MaxLinearVelocityDelta: 10
   m_MaxAngularVelocityDelta: 20
+--- !u!114 &1451852452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451852448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7315ee6debd998d41a26fa8f7a74599f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sockets:
+  - {fileID: 1641615380}
+  echoEmitter: {fileID: 1451852453}
+--- !u!114 &1451852453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451852448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae1e6ffda0c04864d990fce2b0c4957f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mode: 0
+  speed: 8
+  maxRadius: 0.3
+  fade: 2.5
+  intensity: 1
+  edgeColor: {r: 0.6, g: 0.85, b: 1, a: 1}
+  interiorColor: {r: 1, g: 1, b: 1, a: 1}
+  edgeStrength: 1
+  edgeSharpness: 2
+  interiorStrength: 0.45
+  ringTime: 0.12
+  falloff: 2
+  fadeInsideOut: 1
+  emitOnStart: 0
+  autoRepeat: 0
+  frequency: 1
+  onlyWhenMoving: 0
+  moveThreshold: 0.15
+  moveBias: 0
+  triggerOnKey: 0
+  triggerKey: 19
+  triggerAction: {fileID: 0}
+  audioSource: {fileID: 0}
+  oneShotClip: {fileID: 0}
 --- !u!1 &1549496365
 GameObject:
   m_ObjectHideFlags: 0
@@ -3750,13 +3849,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1641615375}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.47616142, z: -0, w: 0.87935793}
-  m_LocalPosition: {x: 0.00023, y: 0.0015, z: -0.00474}
-  m_LocalScale: {x: 0.0054460578, y: 0.0054460578, z: 0.0054460578}
+  m_LocalRotation: {x: 0.62179995, y: 0.33669698, z: 0.33669698, w: 0.62179995}
+  m_LocalPosition: {x: -0.00057000335, y: 0.000640001, z: 0.001500001}
+  m_LocalScale: {x: 0.005446057, y: 0.0054460564, z: 0.0054460578}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 605030548}
-  m_Father: {fileID: 1843678564}
+  m_Father: {fileID: 1451852447}
   m_LocalEulerAnglesHint: {x: 0, y: -65.4, z: 0}
 --- !u!65 &1641615378
 BoxCollider:
@@ -3839,7 +3938,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45f90b7b4ca155d45a0edce4ffeed744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentPuzzle: {fileID: 1843678565}
+  parentPuzzle: {fileID: 1451852452}
 --- !u!65 &1680000411
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4052,7 +4151,7 @@ Transform:
   m_GameObject: {fileID: 1766448653}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.73089194, z: -0, w: 0.6824932}
-  m_LocalPosition: {x: -13.45, y: 0.15249106, z: 4.4854355}
+  m_LocalPosition: {x: -1.257, y: 0.15249106, z: 2.338}
   m_LocalScale: {x: 0.30000004, y: 0.114999995, z: 0.30000004}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -4349,8 +4448,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1843678564}
-  - component: {fileID: 1843678566}
-  - component: {fileID: 1843678565}
   m_Layer: 0
   m_Name: GamePad
   m_TagString: Untagged
@@ -4372,60 +4469,8 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1451852447}
-  - {fileID: 1641615376}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -122.27, z: 0}
---- !u!114 &1843678565
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1843678563}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7315ee6debd998d41a26fa8f7a74599f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sockets:
-  - {fileID: 1641615380}
-  echoEmitter: {fileID: 1843678566}
---- !u!114 &1843678566
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1843678563}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae1e6ffda0c04864d990fce2b0c4957f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mode: 1
-  speed: 8
-  maxRadius: 0.5
-  fade: 2.5
-  intensity: 1
-  edgeColor: {r: 0.6, g: 0.85, b: 1, a: 1}
-  interiorColor: {r: 1, g: 1, b: 1, a: 1}
-  edgeStrength: 1
-  edgeSharpness: 2
-  interiorStrength: 0.45
-  ringTime: 0.12
-  falloff: 2
-  fadeInsideOut: 1
-  emitOnStart: 0
-  autoRepeat: 0
-  frequency: 1
-  onlyWhenMoving: 0
-  moveThreshold: 0.15
-  moveBias: 0
-  triggerOnKey: 0
-  triggerKey: 19
-  triggerAction: {fileID: 0}
-  audioSource: {fileID: 0}
-  oneShotClip: {fileID: 0}
 --- !u!1 &1896809789
 GameObject:
   m_ObjectHideFlags: 0
@@ -4729,7 +4774,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2040926220}
-  - component: {fileID: 2040926222}
   - component: {fileID: 2040926221}
   m_Layer: 0
   m_Name: TV
@@ -4771,45 +4815,9 @@ MonoBehaviour:
   sockets:
   - {fileID: 1400995081}
   - {fileID: 1020108486}
-  echoEmitter: {fileID: 2040926222}
+  echoEmitter: {fileID: 1315939557}
   correctColor: {r: 1, g: 0.49820757, b: 0, a: 0}
   errorColor: {r: 1, g: 0, b: 0, a: 1}
---- !u!114 &2040926222
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2040926219}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae1e6ffda0c04864d990fce2b0c4957f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mode: 0
-  speed: 8
-  maxRadius: 1
-  fade: 2.5
-  intensity: 1
-  edgeColor: {r: 0.6, g: 0.85, b: 1, a: 1}
-  interiorColor: {r: 1, g: 1, b: 1, a: 1}
-  edgeStrength: 1
-  edgeSharpness: 2
-  interiorStrength: 0.45
-  ringTime: 0.12
-  falloff: 2
-  fadeInsideOut: 1
-  emitOnStart: 0
-  autoRepeat: 1
-  frequency: 1
-  onlyWhenMoving: 0
-  moveThreshold: 0.15
-  moveBias: 0
-  triggerOnKey: 0
-  triggerKey: 19
-  triggerAction: {fileID: 0}
-  audioSource: {fileID: 0}
-  oneShotClip: {fileID: 0}
 --- !u!1 &2080227847
 GameObject:
   m_ObjectHideFlags: 0

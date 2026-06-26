@@ -11,6 +11,8 @@ public class WiringPuzzle : MonoBehaviour
 
     public void AdvanceOrder() => currentOrder++;
 
+    private bool wasCompleted = false;
+
     public void RefreshVisual()
     {
         if (echoEmitter == null) return;
@@ -41,8 +43,14 @@ public class WiringPuzzle : MonoBehaviour
         echoEmitter.edgeColor = Color.white;
         echoEmitter.interiorColor = Color.white;
         echoEmitter.SetConstant();
-        Debug.Log("Wiring puzzle complete!");
-        ChallangesManager.Instance.CompleteChallange();
+        if (!wasCompleted)
+        {
+            foreach (var socket in sockets)
+                socket.LockObject();
+                
+            ChallangesManager.Instance.CompleteChallange();
+            wasCompleted = true;
+        }
     }
 }
 
