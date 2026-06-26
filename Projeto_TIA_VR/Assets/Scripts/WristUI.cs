@@ -6,7 +6,7 @@ public class WristUI : MonoBehaviour
     public static WristUI Instance;
 
     public TextMeshProUGUI counterText;
-    public int total = 5; // match your ChallangesManager total
+    public int total = 5;
 
     void Awake()
     {
