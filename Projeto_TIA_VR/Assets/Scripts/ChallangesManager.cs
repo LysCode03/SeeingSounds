@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class ChallangesManager : MonoBehaviour
+public class ChallengesManager : MonoBehaviour
 {
-    public static ChallangesManager Instance; // making sure anyone can access it
+    public static ChallengesManager Instance; // making sure anyone can access it
 
-    public int completedChallanges = 0;
-    public int totalChallanges = 8;
+    public int completedChallenges = 0;
+    public int totalChallenges = 5;
 
     void Awake()
     {
@@ -14,14 +14,15 @@ public class ChallangesManager : MonoBehaviour
 
     public void CompleteChallange()
     {
-        completedChallanges++;
-        Debug.Log($"Challanges: {completedChallanges}/{totalChallanges}");
+        completedChallenges++;
+        Debug.Log($"Challenges: {completedChallenges}/{totalChallenges}");
 
-        WristUI.Instance.UpdateCounter(completedChallanges);
+        WristUI.Instance.UpdateCounter(completedChallenges);
 
-        if (completedChallanges >= totalChallanges)
+        if (completedChallenges >= totalChallenges)
         {
             Debug.Log("All objectives complete!");
+            WristUI.Instance.EndGameCounter();
         }
     }
 }

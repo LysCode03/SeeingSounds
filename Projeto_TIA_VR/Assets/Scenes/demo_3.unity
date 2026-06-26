@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
-  m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
-  m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientSkyColor: {r: 0, g: 0, b: 0, a: 1}
+  m_AmbientEquatorColor: {r: 0, g: 0, b: 0, a: 1}
+  m_AmbientGroundColor: {r: 0, g: 0, b: 0, a: 1}
+  m_AmbientIntensity: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 1, g: 1, b: 1, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: ec46d2188d4b8774e847e75f1e12a8db, type: 2}
   m_HaloStrength: 0.5
@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000002, guid: c0417da49f45d9a49acb9a58d2aadb94, type: 2}
+  m_LightingDataAsset: {fileID: 0}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -119,6 +119,74 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &37318510
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 37318511}
+  - component: {fileID: 37318512}
+  m_Layer: 2
+  m_Name: BigWave Right
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &37318511
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37318510}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1372816364}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &37318512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37318510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae1e6ffda0c04864d990fce2b0c4957f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mode: 0
+  speed: 12
+  maxRadius: 20
+  fade: 1.8
+  intensity: 0.6
+  edgeColor: {r: 0.6, g: 0.85, b: 1, a: 1}
+  interiorColor: {r: 1, g: 1, b: 1, a: 1}
+  edgeStrength: 2
+  edgeSharpness: 8
+  interiorStrength: 0.165
+  ringTime: 0.12
+  falloff: 2
+  fadeInsideOut: 1
+  emitOnStart: 0
+  autoRepeat: 0
+  frequency: 1
+  onlyWhenMoving: 0
+  moveThreshold: 0.15
+  moveBias: 0
+  triggerOnKey: 1
+  triggerKey: 0
+  triggerAction: {fileID: -5604555234885036135, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  audioSource: {fileID: 0}
+  oneShotClip: {fileID: 0}
 --- !u!1 &50503793 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1644476406946372, guid: 20ffe5c18928a4c4594e9261db2333af, type: 3}
@@ -590,7 +658,8 @@ GameObject:
   - component: {fileID: 150585260}
   - component: {fileID: 150585259}
   - component: {fileID: 150585258}
-  m_Layer: 0
+  - component: {fileID: 150585262}
+  m_Layer: 3
   m_Name: Tutorial (02)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -699,6 +768,34 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &150585262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150585256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee10491ef6d5d1d49a270cf6b09bdc19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mipmapMode: 0
+  _dynamicResolution: 1
+  _redrawResolutionThreshold: 2147483647
+  rectTransform: {fileID: 150585257}
+  maxTextureSize: 2048
+  manualRedraw: 0
+  renderInterval: 1
+  renderIntervalFrameOffset: 0
+  superSample: 0
+  layer: 5
+  opacity: 2
+  shape: 0
+  curveRadius: 1
+  overlapMask: 0
+  compositionMode: 1
+  _overlayEnabled: 1
 --- !u!1 &167041857
 GameObject:
   m_ObjectHideFlags: 0
@@ -982,7 +1079,7 @@ GameObject:
   - component: {fileID: 222460796}
   - component: {fileID: 222460798}
   - component: {fileID: 222460797}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1058,7 +1155,7 @@ GameObject:
   - component: {fileID: 232185294}
   - component: {fileID: 232185296}
   - component: {fileID: 232185295}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1235,6 +1332,10 @@ PrefabInstance:
     - target: {fileID: 58445280694286476, guid: 77bc07ecea126f9459e81e7cb9379156, type: 3}
       propertyPath: m_Layer
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 153982007679157697, guid: 77bc07ecea126f9459e81e7cb9379156, type: 3}
+      propertyPath: m_MoveSpeed
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 153982007679157697, guid: 77bc07ecea126f9459e81e7cb9379156, type: 3}
       propertyPath: m_ForwardSource
@@ -1472,6 +1573,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5739245880472075158, guid: 77bc07ecea126f9459e81e7cb9379156, type: 3}
+      propertyPath: 'm_ProvidersToDisable.Array.data[0]'
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5895826684305351068, guid: 77bc07ecea126f9459e81e7cb9379156, type: 3}
       propertyPath: m_Layer
       value: 2
@@ -1541,7 +1646,9 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3904471525139099824, guid: 77bc07ecea126f9459e81e7cb9379156, type: 3}
+    - {fileID: 1470279098769358944, guid: 77bc07ecea126f9459e81e7cb9379156, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1767192434, guid: 77bc07ecea126f9459e81e7cb9379156, type: 3}
       insertIndex: -1
@@ -1558,12 +1665,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1767192434, guid: 77bc07ecea126f9459e81e7cb9379156, type: 3}
       insertIndex: -1
       addedObject: {fileID: 265232067}
-    - targetCorrespondingSourceObject: {fileID: 1767192434, guid: 77bc07ecea126f9459e81e7cb9379156, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 551665642}
     - targetCorrespondingSourceObject: {fileID: 202364688, guid: 77bc07ecea126f9459e81e7cb9379156, type: 3}
       insertIndex: 0
       addedObject: {fileID: 191072539}
+    - targetCorrespondingSourceObject: {fileID: 202364688, guid: 77bc07ecea126f9459e81e7cb9379156, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 551665642}
+    - targetCorrespondingSourceObject: {fileID: 1670256625, guid: 77bc07ecea126f9459e81e7cb9379156, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 37318511}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77bc07ecea126f9459e81e7cb9379156, type: 3}
 --- !u!4 &262394284 stripped
@@ -1618,7 +1728,7 @@ MonoBehaviour:
   mode: 0
   speed: 6
   maxRadius: 3
-  fade: 6
+  fade: 3
   intensity: 0.69
   edgeColor: {r: 0.6, g: 0.85, b: 1, a: 1}
   interiorColor: {r: 1, g: 1, b: 1, a: 1}
@@ -1632,7 +1742,7 @@ MonoBehaviour:
   autoRepeat: 1
   frequency: 0.8
   onlyWhenMoving: 1
-  moveThreshold: 0.12
+  moveThreshold: 0.08
   moveBias: 1
   triggerOnKey: 0
   triggerKey: 19
@@ -2534,7 +2644,8 @@ GameObject:
   - component: {fileID: 449259613}
   - component: {fileID: 449259612}
   - component: {fileID: 449259616}
-  m_Layer: 2
+  - component: {fileID: 449259617}
+  m_Layer: 3
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2656,7 +2767,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   counterText: {fileID: 769317082}
-  total: 8
+  total: 5
+--- !u!114 &449259617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 449259610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee10491ef6d5d1d49a270cf6b09bdc19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mipmapMode: 0
+  _dynamicResolution: 1
+  _redrawResolutionThreshold: 2147483647
+  rectTransform: {fileID: 449259611}
+  maxTextureSize: 2048
+  manualRedraw: 0
+  renderInterval: 1
+  renderIntervalFrameOffset: 0
+  superSample: 0
+  layer: 5
+  opacity: 2
+  shape: 0
+  curveRadius: 1
+  overlapMask: 0
+  compositionMode: 1
+  _overlayEnabled: 1
 --- !u!1 &466846213
 GameObject:
   m_ObjectHideFlags: 0
@@ -3129,7 +3268,7 @@ GameObject:
   - component: {fileID: 551665642}
   - component: {fileID: 551665643}
   m_Layer: 2
-  m_Name: BigWave (E)
+  m_Name: BigWave Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3143,12 +3282,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 551665641}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 262394284}
+  m_Father: {fileID: 496635333}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &551665643
 MonoBehaviour:
@@ -3165,13 +3304,13 @@ MonoBehaviour:
   mode: 0
   speed: 12
   maxRadius: 20
-  fade: 4
-  intensity: 1.5
+  fade: 1.8
+  intensity: 0.6
   edgeColor: {r: 0.6, g: 0.85, b: 1, a: 1}
   interiorColor: {r: 1, g: 1, b: 1, a: 1}
-  edgeStrength: 1
-  edgeSharpness: 2
-  interiorStrength: 0.45
+  edgeStrength: 2
+  edgeSharpness: 8
+  interiorStrength: 0.165
   ringTime: 0.12
   falloff: 2
   fadeInsideOut: 1
@@ -3182,8 +3321,8 @@ MonoBehaviour:
   moveThreshold: 0.15
   moveBias: 0
   triggerOnKey: 1
-  triggerKey: 19
-  triggerAction: {fileID: 0}
+  triggerKey: 0
+  triggerAction: {fileID: -975458271487924830, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   audioSource: {fileID: 0}
   oneShotClip: {fileID: 0}
 --- !u!1 &552990741
@@ -4098,7 +4237,7 @@ GameObject:
   - component: {fileID: 769317081}
   - component: {fileID: 769317083}
   - component: {fileID: 769317082}
-  m_Layer: 2
+  m_Layer: 3
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4144,7 +4283,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Challanges
+  m_text: 'Challenges
 
     0/5'
   m_isRightToLeft: 0
@@ -4499,7 +4638,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 825880318}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BeginningText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5217,7 +5356,8 @@ GameObject:
   - component: {fileID: 913575770}
   - component: {fileID: 913575769}
   - component: {fileID: 913575768}
-  m_Layer: 0
+  - component: {fileID: 913575772}
+  m_Layer: 3
   m_Name: Tutorial (01)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5326,6 +5466,34 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &913575772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 913575766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee10491ef6d5d1d49a270cf6b09bdc19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mipmapMode: 0
+  _dynamicResolution: 1
+  _redrawResolutionThreshold: 2147483647
+  rectTransform: {fileID: 913575767}
+  maxTextureSize: 2048
+  manualRedraw: 0
+  renderInterval: 1
+  renderIntervalFrameOffset: 0
+  superSample: 0
+  layer: 5
+  opacity: 2
+  shape: 0
+  curveRadius: 1
+  overlapMask: 0
+  compositionMode: 1
+  _overlayEnabled: 1
 --- !u!1 &925134966
 GameObject:
   m_ObjectHideFlags: 0
@@ -5570,7 +5738,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33cc9218b0d1cfe488d8affd9e3e9c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ambient: 0.001
+  ambient: 0
   brightness: 0.8
   rangeSoftness: 2
   rangeScale: 1
@@ -6401,7 +6569,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1125754418}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BeginningText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6886,7 +7054,8 @@ GameObject:
   - component: {fileID: 1245311562}
   - component: {fileID: 1245311561}
   - component: {fileID: 1245311560}
-  m_Layer: 0
+  - component: {fileID: 1245311564}
+  m_Layer: 3
   m_Name: Tutorial (03)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6995,6 +7164,34 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1245311564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1245311558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee10491ef6d5d1d49a270cf6b09bdc19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mipmapMode: 0
+  _dynamicResolution: 1
+  _redrawResolutionThreshold: 2147483647
+  rectTransform: {fileID: 1245311559}
+  maxTextureSize: 2048
+  manualRedraw: 0
+  renderInterval: 1
+  renderIntervalFrameOffset: 0
+  superSample: 0
+  layer: 5
+  opacity: 2
+  shape: 0
+  curveRadius: 1
+  overlapMask: 0
+  compositionMode: 1
+  _overlayEnabled: 1
 --- !u!65 &1279665472
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7248,7 +7445,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1299372852}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BeginningText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8231,6 +8428,11 @@ Transform:
   - {fileID: 1245311559}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1372816364 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1670256625, guid: 77bc07ecea126f9459e81e7cb9379156, type: 3}
+  m_PrefabInstance: {fileID: 262394283}
+  m_PrefabAsset: {fileID: 0}
 --- !u!65 &1393029559
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10832,7 +11034,7 @@ GameObject:
   - component: {fileID: 1633563990}
   - component: {fileID: 1633563989}
   m_Layer: 0
-  m_Name: ChallangesManager
+  m_Name: ChallengesManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10850,8 +11052,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b38e46e30c7ac104b869ac85663d5671, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  completedChallanges: 0
-  totalChallanges: 5
+  completedChallenges: 0
+  totalChallenges: 5
 --- !u!4 &1633563990
 Transform:
   m_ObjectHideFlags: 0
@@ -11542,7 +11744,7 @@ GameObject:
   - component: {fileID: 1740120239}
   - component: {fileID: 1740120241}
   - component: {fileID: 1740120240}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12108,7 +12310,7 @@ GameObject:
   - component: {fileID: 1780153147}
   - component: {fileID: 1780153149}
   - component: {fileID: 1780153148}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12158,8 +12360,8 @@ MonoBehaviour:
     to complete.
 
 
-    Walk, or snap your fingers {tecla que faz ecolocation} to
-    see your environment.'
+    Walk, or snap your fingers by pressing the A or X button on
+    the respective controller to see your environment.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -12250,7 +12452,7 @@ GameObject:
   - component: {fileID: 1790447844}
   - component: {fileID: 1790447846}
   - component: {fileID: 1790447845}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12872,7 +13074,7 @@ GameObject:
   - component: {fileID: 1927796945}
   - component: {fileID: 1927796947}
   - component: {fileID: 1927796946}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13189,7 +13391,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -13310,7 +13512,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -13804,7 +14006,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1

@@ -233,7 +233,7 @@ public class EchoSoundEmitter : MonoBehaviour
         if (mgr != null)
             mgr.EmitPulse(transform.position + _moveDir * moveBias, GetWaveSettings());
     }
-    
+
     // Change Mode to constant
     public void SetConstant()
     {

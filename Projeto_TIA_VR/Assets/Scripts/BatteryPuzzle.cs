@@ -32,8 +32,8 @@ public class BatteryPuzzle : MonoBehaviour
         {
             foreach (var socket in sockets)
                 socket.LockObject();
-                
-            ChallangesManager.Instance.CompleteChallange();
+
+            ChallengesManager.Instance.CompleteChallange();
             wasCompleted = true;
         }
     }

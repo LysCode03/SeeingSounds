@@ -17,4 +17,8 @@ public class WristUI : MonoBehaviour
     {
         counterText.text = $"Challenges\n{completed}/{total}";
     }
+    public void EndGameCounter()
+    {
+        counterText.text = "Congratulations, you won!";
+    }
 }
