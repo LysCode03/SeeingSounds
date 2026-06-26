@@ -56,9 +56,9 @@ public class WiringSocket : MonoBehaviour
 
         if (interactable != null)
         {
-            var grab = (interactable as MonoBehaviour)
-                ?.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
-            if (grab != null) grab.enabled = false;
+            var grab = (interactable as MonoBehaviour)?.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
+            if (grab != null)
+                grab.interactionLayers = InteractionLayerMask.GetMask("PostCompletionWires");
         }
     }
 

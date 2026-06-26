@@ -2088,7 +2088,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
   m_InteractionLayers:
-    m_Bits: 4
+    m_Bits: 65540
   m_Handedness: 0
   m_AttachTransform: {fileID: 466846214}
   m_KeepSelectedTargetValid: 1
@@ -2944,7 +2944,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
   m_InteractionLayers:
-    m_Bits: 4
+    m_Bits: 65540
   m_Handedness: 0
   m_AttachTransform: {fileID: 592560749}
   m_KeepSelectedTargetValid: 1
@@ -4549,7 +4549,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
   m_InteractionLayers:
-    m_Bits: 2
+    m_Bits: 131074
   m_Handedness: 0
   m_AttachTransform: {fileID: 605030548}
   m_KeepSelectedTargetValid: 1
